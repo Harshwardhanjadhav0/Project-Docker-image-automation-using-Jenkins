@@ -11,7 +11,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    docker.build("localhost:5000/ubi-apache:${env.BUILD_ID}")
+                    docker.build("localhost:5000/harsh-jenkins-apache:${env.BUILD_ID}")
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('http://localhost:5000') {
-                        docker.image("localhost:5000/ubi-apache:${env.BUILD_ID}").push()
+                        docker.image("localhost:5000/harsh-jenkins-apache:${env.BUILD_ID}").push()
                     }
                 }
             }
@@ -30,14 +30,14 @@ pipeline {
             steps {
                 script {
                     // Cleanup old container if exists
-                    sh 'docker rm -f ubi-apache || true'
+                    sh 'docker rm -f harsh-jenkins-apache || true'
                     
                     // Run new container (mapping host port 8088 to container port 8088)
                     sh """
                     docker run -d \
-                        --name ubi-apache \
+                        --name harsh-jenkins-apache \
                         -p 8088:8088 \
-                        localhost:5000/ubi-apache:${env.BUILD_ID}
+                        localhost:5000/harsh-jenkins-apache:${env.BUILD_ID}
                     """
                     
                     // Verify deployment
