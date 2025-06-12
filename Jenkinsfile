@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Git Repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-repo.git'
+                git branch: 'main', url: 'https://github.com/Harshwardhanjadhav0/Project-Docker-image-automation-using-Jenkins.git'
             }
         }
         stage('Build Docker Image') {
